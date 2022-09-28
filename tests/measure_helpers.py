@@ -183,13 +183,13 @@ def testbench(
 def blkdiscard() -> Any:
     run(["sudo", "chown", os.getlogin(), HOST_SSD])
     proc = run(
-        ["sudo", "blkdiscard", "-f", HOST_SSD], check=False, stderr=subprocess.PIPE
+        ["sudo", "blkdiscard", HOST_SSD], check=False, stderr=subprocess.PIPE
     )
     while "Device or resource busy" in proc.stderr:
         print("blkdiscard: waiting for target not to be busy")
         time.sleep(1)
         proc = run(
-            ["sudo", "blkdiscard", "-f", HOST_SSD], check=False, stderr=subprocess.PIPE
+            ["sudo", "blkdiscard", HOST_SSD], check=False, stderr=subprocess.PIPE
         )
     proc.check_returncode()
 

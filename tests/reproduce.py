@@ -277,7 +277,8 @@ def main() -> None:
         warn("During the evaluation we need the 'sudo' command")
         sys.exit(1)
 
-    run(["sudo", "tee", "/sys/devices/system/cpu/intel_pstate/no_turbo"], input="1\n")
+    #run(["sudo", "tee", "/sys/devices/system/cpu/intel_pstate/no_turbo"], input="1\n")
+    #Disabling intel turbo boost manually.
 
     host_ssd = os.environ.get("HOST_SSD")
     if not host_ssd:

@@ -82,8 +82,8 @@ def format_ssd() -> None:
     run(["sudo", "parted", HOST_SSD, "--", "mklabel", "gpt"])
     run(["sudo", "parted", HOST_SSD, "--", "mkpart", "primary", "0%", "10G"])
     run(["sudo", "parted", HOST_SSD, "--", "mkpart", "primary", "10G", "20G"])
-    run(["sudo", f"mkfs.{FS}", HOST_SSDp1])
-    run(["sudo", f"mkfs.{FS}", HOST_SSDp2])
+    run([f"mkfs.{FS}", HOST_SSDp1])
+    run([f"mkfs.{FS}", HOST_SSDp2])
     Path(HOST_DIR).mkdir(exist_ok=True)
     Path(HOST_DIR_SCRATCHDEV).mkdir(exist_ok=True)
     run(["sudo", "chown", os.getlogin(), HOST_DIR])
@@ -106,7 +106,7 @@ def native(stats: Dict[str, List[Any]]) -> None:
         env = dict(env, **env_scratch)
     if QUICK:
         run(
-            ["sudo", "-E", "xfstests-check", "-e", excludes_str(), "generic/600"],
+            ["xfstests-check", "-e", excludes_str(), "generic/600"],
             stdout=None,
             stderr=None,
             extra_env=env,
@@ -114,7 +114,7 @@ def native(stats: Dict[str, List[Any]]) -> None:
         )
     else:
         run(
-            ["sudo", "-E", "xfstests-check", "-e", excludes_str(), "-g", "quick"],
+            ["xfstests-check", "-e", excludes_str(), "-g", "quick"],
             stdout=None,
             stderr=None,
             extra_env=env,
@@ -131,7 +131,7 @@ def native(stats: Dict[str, List[Any]]) -> None:
     for failure in failures:
         time.sleep(1)
         run(
-            ["sudo", "-E", "xfstests-check", "-e", excludes_str(), failure],
+            [ "xfstests-check", "-e", excludes_str(), failure],
             stdout=None,
             stderr=None,
             extra_env=env,
